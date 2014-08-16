@@ -1,6 +1,10 @@
+TODO
 * Add tempo tapper
 	- Render tempo in time slider
 * Styles
-* fix interactions in time slider
 * volume controls
 * key bindings
+
+DONE
+* github
+* fix interactions in time slider
