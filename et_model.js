@@ -84,7 +84,7 @@ var ETM = {
 
 	
 	_monitorPlayback: function() {
-		if (ETM.player.getPlayerState() == 1) {
+		if (ETM.player && ETM.player.getPlayerState() == 1) {
 			var playTime = ETM.currentTime(); 
 			if (playTime > ETM.sectionEnd || playTime < ETM.sectionStart) {
 				ETM.seek(ETM.sectionStart);

@@ -20,6 +20,7 @@ var ETV = {
 		$('#play').click(ETM.play);
 		$('#pause').click(ETM.pause);
 		$('#load-video').click(this.handleVideoLoad);
+		$('#tempo-tap').keydown(this.handleTempoTap);
 		
 		$('#time-slider').mousedown(this.handleTimeSlide);
 		$(document).mouseup(this.unsetDragging);
@@ -66,6 +67,14 @@ var ETV = {
 			ETM.editSection(time);
 		} else {
 			ETM.seek(time);
+		}
+	},
+
+	handleTempoTap: function() {
+		TEMPO_TAP.registerTap();
+		var currentBpm = TEMPO_TAP.getBpm();
+		if (currentBpm) {
+			$('#bpm').val(currentBpm);
 		}
 	},
 

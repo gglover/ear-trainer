@@ -10,7 +10,7 @@ var TIME_SLIDER = {
 
 	sizes: {
 		startEndWidth: 2,
-		currentTimeWidth: 3
+		currentTimeWidth: 1
 	},
 
 	render: function() {
