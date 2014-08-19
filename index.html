@@ -21,10 +21,12 @@
 		<div id="controls">
 			<button id="play">play</button>
 			<button id="pause">pause</button>
-			<input id="video-url" value="https://www.youtube.com/watch?v=vg07KCIQKXI"/>
+			<input id="volume" type="range" min="0" max="100">
+			<input id="video-url" value="https://www.youtube.com/watch?v=7RMQksXpQSk"/>
 			<button id="load-video">load video</button>
 			<button id="tempo-tap">tap tempo</button>
-			<input id="bpm"/>
+			<input type="number" step="0.1" id="bpm"/>
+			<input type="checkbox" id="disable-metronome" checked="checked"/>
 		</div>
 
 	</body>

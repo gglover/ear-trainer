@@ -34,6 +34,17 @@ var TIME_SLIDER = {
 		current = TIME_SLIDER.time_to_offset(ETM.currentTime());
 		ctx.fillRect(current - TIME_SLIDER.sizes.currentTimeWidth / 2, 
 					 0, TIME_SLIDER.sizes.currentTimeWidth, cvs.height);
+
+		/*if (ETM.bpm != 0) {
+			ctx.fillStyle = '#777777';
+			var beatTime = 0;
+			while (beatTime < ETM.videoLength()) {
+				debugger
+				beatTime += (60 / (ETM.bpm/4));
+				var beatPos = TIME_SLIDER.time_to_offset(beatTime);
+				ctx.fillRect(beatPos, 0, 1, cvs.height);
+			}
+		}*/
 	},
 
 	time_to_offset: function(time) {

@@ -4,6 +4,9 @@ var ETM = {
 	player: null,
 	sectionStart: 0,
 	sectionEnd: 0,
+	bpm: 0,
+
+	//sectionRestartTime: 0,
 	
 	initialize: function() {
 		ETM.state = 'unloaded';
@@ -43,6 +46,12 @@ var ETM = {
 	seek: function(time) {
 		if (time < 0 || time > ETM.videoLength() || time < ETM.sectionStart || time > ETM.sectionEnd) { return; }
 		ETM.player.seekTo(time);
+		//can't get this to work right now
+		//TEMPO_TAP.alignMetronomeToSection();
+	},
+
+	changeVolume: function(level) {
+		ETM.player.setVolume(level);
 	},
 
 	editSection: function(time) {
@@ -87,6 +96,7 @@ var ETM = {
 		if (ETM.player && ETM.player.getPlayerState() == 1) {
 			var playTime = ETM.currentTime(); 
 			if (playTime > ETM.sectionEnd || playTime < ETM.sectionStart) {
+				ETM.sectionRestartTime = Date.now();
 				ETM.seek(ETM.sectionStart);
 			}
 			$(document).trigger("tick");

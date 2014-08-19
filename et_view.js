@@ -19,8 +19,11 @@ var ETV = {
 	bindEvents: function() {
 		$('#play').click(ETM.play);
 		$('#pause').click(ETM.pause);
+		$('#volume').on('input change', this.handleVolumeChange);
 		$('#load-video').click(this.handleVideoLoad);
 		$('#tempo-tap').keydown(this.handleTempoTap);
+		$('#bpm').change(this.handleBpmChange);
+		$('#disable-metronome').change(this.handleMetronomeDisable);
 		
 		$('#time-slider').mousedown(this.handleTimeSlide);
 		$(document).mouseup(this.unsetDragging);
@@ -56,26 +59,36 @@ var ETV = {
 		var time = (relative_x / $cvs.width()) * ETM.videoLength();
 
 
-		var targetedSectionSlider = (Math.abs(time - ETM.sectionStart) < 1 || Math.abs(time - ETM.sectionEnd) < 1);
+		var targetedSectionSlider = (Math.abs(time - ETM.sectionStart) < 1.5 || Math.abs(time - ETM.sectionEnd) < 1);
 		if (!ETV.dragging && targetedSectionSlider) {
 			$(document).bind('mousemove', ETV.handleTimeSlide);
 			ETV.dragging = true;
 		}
 
 		if (ETV.dragging) {
-			console.log('drag');
 			ETM.editSection(time);
 		} else {
 			ETM.seek(time);
 		}
 	},
 
+	handleVolumeChange: function(e) {
+		ETM.changeVolume(parseInt(e.currentTarget.value));
+	},
+
+	handleMetronomeDisable: function(e) {
+		TEMPO_TAP.disabled = !TEMPO_TAP.disabled;
+	},
+
 	handleTempoTap: function() {
 		TEMPO_TAP.registerTap();
-		var currentBpm = TEMPO_TAP.getBpm();
-		if (currentBpm) {
-			$('#bpm').val(currentBpm);
-		}
+		TEMPO_TAP.recordBpm();
+		$('#bpm').val(ETM.bpm);
+	},
+
+	handleBpmChange: function() {
+		ETM.bpm = parseFloat($('#bpm').val());
+		TEMPO_TAP.startMetronome();
 	},
 
 	handleVideoStateChange: function(state) {

@@ -4,6 +4,7 @@ TODO
 * Styles
 * volume controls
 * key bindings
+* high-def canvas
 
 DONE
 * github

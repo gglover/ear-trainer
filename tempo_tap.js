@@ -3,8 +3,13 @@ var TEMPO_TAP = {
 	MIN_BPM: 30,
 	MAX_BPM: 400,
 	TAP_HISTORY_MAX: 20,
+	METRONOME_CLICK: new Audio('click.wav'),
 
 	lastTaps: [0],
+	clickInterval: null,
+	disabled: false,
+
+	lastClickTime: 0,
 
 	registerTap: function() {
 		var tapTime = Date.now();
@@ -19,13 +24,48 @@ var TEMPO_TAP = {
 		}
 	},
 
-	getBpm: function() {
+	recordBpm: function() {
 		if (this.lastTaps.length < 2) { return 0 };
 		var bpm = 0;
 		for (var i = this.lastTaps.length - 1; i > 0; i--) {
 			bpm += this.lastTaps[i] - this.lastTaps[i - 1];
 		}
-		return this._msToBpm(bpm / (this.lastTaps.length - 1));
+
+		bpm = this._msToBpm(bpm / (this.lastTaps.length - 1));
+		bpm = Math.round(bpm * 10) / 10;
+		ETM.bpm = bpm;
+		this.startMetronome();
+		return ETM.bpm;
+	},
+
+	stopMetronome: function() {
+		clearInterval(this.clickInterval);
+		this.clickInterval = null;
+	},
+
+	startMetronome: function() {
+		this.stopMetronome();
+		this.clickInterval = setInterval(this._playClickFn, this._bpmToMs(ETM.bpm));
+	},
+
+	alignMetronomeToSection: function() {
+		var sectionStartTime = ETM.sectionRestartTime - ((ETM.sectionEnd - ETM.sectionStart) * 1000);
+		var offset = TEMPO_TAP.lastClickTime - ETM.sectionStart % TEMPO_TAP._bpmToMs(ETM.bpm);
+		clearInterval(TEMPO_TAP.clickInterval);
+		setTimeout(TEMPO_TAP._offsetPlayClickFn, offset);
+		console.log(offset);
+	},
+
+	_offsetPlayClickFn: function() {
+		TEMPO_TAP._playClickFn();
+		TEMPO_TAP.clickInterval = setInterval(TEMPO_TAP._playClickFn, TEMPO_TAP._bpmToMs(ETM.bpm));
+	},
+
+	_playClickFn: function() {
+		if (!TEMPO_TAP.disabled) {
+			TEMPO_TAP.lastClickTime = Date.now();
+			TEMPO_TAP.METRONOME_CLICK.play();
+		}
 	},
 
 	_bpmToMs: function(bpm) {
