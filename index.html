@@ -3,8 +3,8 @@
 		<title>ear-train</title>
 		<meta charset="utf-8" />
 		<meta name="desciption" content="Ear training tools for your favorite youtube videos."/>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 		<script type="text/javascript" src="et_model.js"></script>
 		<script type="text/javascript" src="et_view.js"></script>
 		<script type="text/javascript" src="time_slider.js"></script>
@@ -13,21 +13,35 @@
 		<link href="ear_train.css" type="text/css" rel="stylesheet" />
 	</head>
 	<body>
-		<div id="player-container">
-			<div id="player"> Sorry, this page isn't going to work for you. </div>
-			<canvas id="time-slider">
-		</div>
+		<header>
+			<span id="app-name">youtube ear trainer</span>
+			<span id="credits">gus glover (2014)</span>
+		</header>
 
-		<div id="controls">
-			<button id="play">play</button>
-			<button id="pause">pause</button>
-			<input id="volume" type="range" min="0" max="100">
-			<input id="video-url" value="https://www.youtube.com/watch?v=7RMQksXpQSk"/>
-			<button id="load-video">load video</button>
-			<button id="tempo-tap">tap tempo</button>
-			<input type="number" step="0.1" id="bpm"/>
-			<input type="checkbox" id="disable-metronome" checked="checked"/>
-		</div>
+		<div id="content">
+			<div id="player-container">
+				<div id="unloaded-placeholder">load a video</div>
+				<div id="player"> Sorry, this page isn't going to work for you. </div>
+				<canvas id="time-slider" width="800" height="70"></canvas>
+			</div>
 
+			<div id="controls">
+				<div class="control-group">
+					<button id="play-pause">play</button>
+					<input id="volume" type="range" min="0" max="100">
+				</div>
+
+				<div class="control-group">
+					<input id="video-url" value="https://www.youtube.com/watch?v=03CQP9mHUr0"/>
+					<button id="load-video">load video</button>
+				</div>
+
+				<div class="control-group">
+					<input type="number" step="0.1" id="bpm"/>
+					<div id="disable-metronome" class="disabled"/></div>
+					<button id="tempo-tap">tap tempo</button>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

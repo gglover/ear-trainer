@@ -7,7 +7,7 @@ var TEMPO_TAP = {
 
 	lastTaps: [0],
 	clickInterval: null,
-	disabled: false,
+	disabled: true,
 
 	lastClickTime: 0,
 

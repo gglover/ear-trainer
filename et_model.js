@@ -9,7 +9,7 @@ var ETM = {
 	//sectionRestartTime: 0,
 	
 	initialize: function() {
-		ETM.state = 'unloaded';
+		ETM.status = 'unloaded';
 		setInterval(this._monitorPlayback, 500);
 	},
 
@@ -17,7 +17,7 @@ var ETM = {
 
 	reset: function() {
 		ETM.sectionStart = ETM.sectionEnd = 0;
-		ETM.idle = true;
+		ETM.status = 'idle';
 	},
 
 	loadVideo: function(videoId) {
@@ -90,8 +90,6 @@ var ETM = {
 		return ETM.player.getCurrentTime();
 	},
 
-
-	
 	_monitorPlayback: function() {
 		if (ETM.player && ETM.player.getPlayerState() == 1) {
 			var playTime = ETM.currentTime(); 

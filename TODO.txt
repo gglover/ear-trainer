@@ -1,11 +1,11 @@
 TODO
-* Add tempo tapper
-	- Render tempo in time slider
 * Styles
-* volume controls
-* key bindings
 * high-def canvas
 
 DONE
 * github
 * fix interactions in time slider
+* switch to iframe player
+* Add tempo tapper
+* volume controls
+* key bindings

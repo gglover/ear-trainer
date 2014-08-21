@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    <audio>
+      <div id="player"></div>
+    </audio>
+
+    <script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '390',
+          width: '640',
+          videoId: 'M7lc1UVf-VE',
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          var myAudio = document.querySelector('audio');
+
+          // Create a MediaElementAudioSourceNode
+          // Feed the HTMLMediaElement into it
+          var source = audioCtx.createMediaElementSource(myAudio);
+
+          // Create a gain node
+          var gainNode = audioCtx.createGain();
+
+          // Create variables to store mouse pointer Y coordinate
+          // and HEIGHT of screen
+          var CurY;
+          var HEIGHT = window.innerHeight;
+
+          // Get new mouse pointer coordinates when mouse is moved
+          // then set new gain value
+
+          var updatePage = function(e) {
+              CurY = (window.Event) ? e.pageY : event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+              console.log('call');
+              gainNode.gain.value = CurY/HEIGHT;
+          }
+
+          document.onmousemove = updatePage;
+          debugger;
+
+          
+
+
+          // connect the AudioBufferSourceNode to the gainNode
+          // and the gainNode to the destination, so we can play the
+          // music and adjust the volume using the mouse cursor
+          source.connect(gainNode);
+          gainNode.connect(audioCtx.destination);
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+    </script>
+  </body>
+</html>
