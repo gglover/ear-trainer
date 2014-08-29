@@ -2,7 +2,7 @@ var TEMPO_TAP = {
 
 	MIN_BPM: 30,
 	MAX_BPM: 400,
-	TAP_HISTORY_MAX: 20,
+	TAP_HISTORY_MAX: 10,
 	METRONOME_CLICK: new Audio('click.wav'),
 
 	lastTaps: [0],

@@ -2,6 +2,10 @@
 var ETV = {
 
 	ID_REGEX: /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/,
+	VIDEO_ROTATION: ["https://www.youtube.com/watch?v=oIAkRVBS-0U",
+					 "https://www.youtube.com/watch?v=lMWQ0Cz5hHY",
+					 "https://www.youtube.com/watch?v=03CQP9mHUr0",
+					 "https://www.youtube.com/watch?v=Qz7zo7wIlbU"],
 
 	initialize: function() {
 		window.onYouTubeIframeAPIReady = function() {
@@ -14,6 +18,9 @@ var ETV = {
 					'onStateChange': ETV.handleVideoStateChange
 				}
 			});
+			var videoIndex = Math.floor(Math.random() * ETV.VIDEO_ROTATION.length);
+			debugger;
+			$('#video-url').val(ETV.VIDEO_ROTATION[videoIndex]);
 		};
 	},
 
@@ -23,25 +30,26 @@ var ETV = {
 		$('#load-video').click(ETV.handleVideoLoad);
 		$('#bpm').change(ETV.handleBpmChange);
 		$('#disable-metronome').click(ETV.handleMetronomeDisable);
-
-		$('#tempo-tap').focus(function(e) { $(e.currentTarget).text('tap any key') });
-		$('#tempo-tap').blur(function(e) { $(e.currentTarget).text('tap tempo') });
 		
 		$('#time-slider').mousedown(ETV.handleTimeSlide);
+		$('#time-slider').mousemove(ETV.handleTimeSliderHover);
 		$(document).mouseup(ETV.unsetDragging);
 
 		$(document).bind("sectionChange", TIME_SLIDER.render);
 		$(document).bind("tick", TIME_SLIDER.render);
-		$(document).bind("videoLoad", TIME_SLIDER.render);	
+		$(document).bind("videoLoad", TIME_SLIDER.render);
+
+		// YT API has no events for a seek's competions so it gotta be this way QQ
+		$(document).bind("seek", function() { setTimeout(TIME_SLIDER.render, 200); });	
 
 		// Keyboard bindings
 		var redirectKeyInput = function(e) {
-			if (document.activeElement.id == 'tempo-tap') {
-				ETV.handleTempoTap();
-			} else if (e.keyCode == 32) {
+			if (e.keyCode == 32) {
 				e.preventDefault();
 				ETV.handlePlayPause();
-			}
+			} else if (e.keyCode == 84) { ETV.handleTempoTap();      
+			} else if (e.keyCode == 37) { ETV.handleLeftArrowTap();  
+			} else if (e.keyCode == 39) { ETV.handleRightArrowTap(); }
 		}
 		$(document).keydown(redirectKeyInput);
 	},
@@ -63,23 +71,38 @@ var ETV = {
 	},
 
 	handleTimeSlide: function(e) {
-
-		var $cvs = $('#time-slider');
-		var relative_x = e.pageX - $cvs.offset().left;
-		var time = (relative_x / $cvs.width()) * ETM.videoLength();
-
-
-		var targetedSectionSlider = (Math.abs(time - ETM.sectionStart) < 1.5 || Math.abs(time - ETM.sectionEnd) < 1);
+		var targetedSectionSlider = ETV._isSliderSelected(e);
 		if (!ETV.dragging && targetedSectionSlider) {
 			$(document).bind('mousemove', ETV.handleTimeSlide);
 			ETV.dragging = true;
 		}
 
+		var time = ETV._getSliderTime(e);
 		if (ETV.dragging) {
 			ETM.editSection(time);
 		} else {
 			ETM.seek(time);
 		}
+	},
+
+	handleTimeSliderHover: function(e) {
+		var targetedSectionSlider = ETV._isSliderSelected(e);
+		if (targetedSectionSlider) {
+			e.currentTarget.style.cursor = 'pointer';
+		} else {
+			e.currentTarget.style.cursor = 'default';
+		}
+	},
+
+	_isSliderSelected: function(e) {
+		var time = ETV._getSliderTime(e);
+		return (Math.abs(time - ETM.sectionStart) < 1.5 || Math.abs(time - ETM.sectionEnd) < 1);
+	},
+
+	_getSliderTime: function(e) {
+		var $cvs = $('#time-slider');
+		var relative_x = e.pageX - $cvs.offset().left;
+		return (relative_x / $cvs.width()) * ETM.videoLength();
 	},
 
 	handleVolumeChange: function(e) {
@@ -96,8 +119,7 @@ var ETV = {
 		}
 	},
 
-	handleMetronomeDisable: function(e) {
-		debugger;
+	handleMetronomeDisable: function(e) { 
 		var disabled = TEMPO_TAP.disabled 
 		if (!disabled) {
 			$(e.currentTarget).addClass('disabled');
@@ -122,6 +144,16 @@ var ETV = {
 		if (state.data == 1 && ETM.status == 'switching') {
 			$('#player-container').addClass('loaded');
 			ETM.afterVideoLoad();
+		} else if (state.data == 1) {
+			TIME_SLIDER.render();
 		}
+	},
+
+	handleRightArrowTap: function() {
+		ETM.seek(ETM.currentTime() + 2);
+	},
+
+	handleLeftArrowTap:function() {
+		ETM.seek(ETM.currentTime() - 2);
 	}
 };

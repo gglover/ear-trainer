@@ -1,6 +1,5 @@
 TODO
-* Styles
-* high-def canvas
+* video rotation
 
 DONE
 * github
@@ -9,3 +8,7 @@ DONE
 * Add tempo tapper
 * volume controls
 * key bindings
+* high-def canvas
+* Styles
+* stays on play after initial video load
+* cursor to indicate draggable

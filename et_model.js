@@ -46,6 +46,7 @@ var ETM = {
 	seek: function(time) {
 		if (time < 0 || time > ETM.videoLength() || time < ETM.sectionStart || time > ETM.sectionEnd) { return; }
 		ETM.player.seekTo(time);
+		$(document).trigger("seek");
 		//can't get this to work right now
 		//TEMPO_TAP.alignMetronomeToSection();
 	},

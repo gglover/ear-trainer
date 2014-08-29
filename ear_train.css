@@ -1,10 +1,12 @@
 body {
-	background-color: #d5d5d5;
+	background-color: #F2F2F2;
 	margin: 0;
+	overflow: hidden;
 }
 
 #content {
 	text-align: center;
+	margin-top: 70px;
 }
 
 #player-container {
@@ -30,7 +32,16 @@ iframe {
 	background-color: black;
 	color: white;
 	padding-top: 50px;
-	text-align: center;	
+	text-align: left;
+}
+
+#instructions {
+	margin-left: 30%;
+}
+
+.control {
+	font-weight: bold;
+	color: #dd0000;
 }
 
 #player-container.loaded iframe {
@@ -51,9 +62,18 @@ input[type="range"] {
 	width: 55px;
 }
 
+input[type="number"] {
+	width: 50px;
+}
+
+input[type="text"] {
+	width: 300px;
+}
+
 input, button, #disable-metronome {
 	height: 30px;
-	border:solid 2px #000000; 
+	border: solid 2px #000000;
+	border-width:  1px 2px 4px 2px;
 	vertical-align: middle;
 }
 
@@ -66,12 +86,22 @@ button {
 	border-radius: 1px; 
 	font: 12px serif;
 	font-weight:bold; 
-	color: white; 
-	background: black; 
-	-webkit-box-shadow:0px 0px 5px #bababa, inset 0px 0px 5px #ffffff; 
-	-moz-box-shadow: 0px 0px 5px #bababa,  inset 0px 0px 5px #ffffff;  
-	box-shadow:0px 0px 5px #bababa, inset 0px 0px 5px #ffffff; 
+	color: black; 
+	background: white; 
 	width: 90px;
+	cursor: pointer;
+}
+
+#recording, #disable-metronome {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#recording {
+	background-color: white;
+	border-radius: 7px;
+	width: 14px;
+	height: 14px;
 }
 
 #disable-metronome {
@@ -80,24 +110,29 @@ button {
 	width: 26px;
 	height: 26px;
 	background-size: contain;
-	display: inline-block;
 }
 
 #disable-metronome.disabled {
 	background-image: url('images/metronome-off.png');
 }
 
-#tempo-tap:focus {
+#tempo-controls.recording #tempo-tap {
 	background-color: #7d0000;
 }
 
-header {
-	font-size: 20px;
-	padding: 20px 50px;
+#tempo-controls.recording #recording {
+	background-color: #7d0000;
 }
 
-header #credits {
-	float: right;
+footer {
+	font-size: 20px;
+	padding: 0px 50px;
+	margin-top: 35px;
+}
+
+#credits a {
+	font-size: 12px;
+	color: black;
 }
 
 
