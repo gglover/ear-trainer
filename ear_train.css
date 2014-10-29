@@ -1,12 +1,19 @@
 body {
-	background-color: #F2F2F2;
 	margin: 0;
 	overflow: hidden;
+	background-image: url('images/pattern-c0rz.png');
+	font-family: Georgia;
+	color: #404040;
 }
 
 #content {
+	background-color: #F2F2F2;
 	text-align: center;
-	margin-top: 70px;
+	padding-top: 70px;
+	margin: auto;
+	width: 85%;
+	height: 100%;
+	box-shadow: 0px 0px 10px #707070;
 }
 
 #player-container {
@@ -30,8 +37,8 @@ iframe {
 	width: 800px;
 	height: 300px;
 	background-color: black;
-	color: white;
 	padding-top: 50px;
+	color: #F2F2F2;
 	text-align: left;
 }
 
@@ -72,7 +79,7 @@ input[type="text"] {
 
 input, button, #disable-metronome {
 	height: 30px;
-	border: solid 2px #000000;
+	border: solid 2px #404040;
 	border-width:  1px 2px 4px 2px;
 	vertical-align: middle;
 }
@@ -86,7 +93,7 @@ button {
 	border-radius: 1px; 
 	font: 12px serif;
 	font-weight:bold; 
-	color: black; 
+	color: #404040; 
 	background: white; 
 	width: 90px;
 	cursor: pointer;
@@ -127,12 +134,13 @@ button {
 footer {
 	font-size: 20px;
 	padding: 0px 50px;
-	margin-top: 35px;
+	margin-top: 40px;
+	text-align: left;
 }
 
 #credits a {
 	font-size: 12px;
-	color: black;
+	color: #0F0F0F;
 }
 
 

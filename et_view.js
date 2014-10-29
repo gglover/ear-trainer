@@ -96,7 +96,7 @@ var ETV = {
 
 	_isSliderSelected: function(e) {
 		var time = ETV._getSliderTime(e);
-		return (Math.abs(time - ETM.sectionStart) < 1.5 || Math.abs(time - ETM.sectionEnd) < 1);
+		return (Math.abs(time - ETM.sectionStart) < 2.5 || Math.abs(time - ETM.sectionEnd) < 2.5);
 	},
 
 	_getSliderTime: function(e) {
