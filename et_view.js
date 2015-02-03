@@ -19,7 +19,6 @@ var ETV = {
 				}
 			});
 			var videoIndex = Math.floor(Math.random() * ETV.VIDEO_ROTATION.length);
-			debugger;
 			$('#video-url').val(ETV.VIDEO_ROTATION[videoIndex]);
 		};
 	},
@@ -88,7 +87,7 @@ var ETV = {
 	handleTimeSliderHover: function(e) {
 		var targetedSectionSlider = ETV._isSliderSelected(e);
 		if (targetedSectionSlider) {
-			e.currentTarget.style.cursor = 'pointer';
+			e.currentTarget.style.cursor = 'ew-resize';
 		} else {
 			e.currentTarget.style.cursor = 'default';
 		}

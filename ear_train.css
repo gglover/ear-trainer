@@ -13,7 +13,7 @@ body {
 	margin: auto;
 	width: 85%;
 	height: 100%;
-	box-shadow: 0px 0px 10px #707070;
+
 }
 
 #player-container {
@@ -21,7 +21,12 @@ body {
 	margin: 0 auto;
 }
 
+#content, #player-container {
+	box-shadow: 0px 0px 10px #707070;	
+}
+
 #time-slider {
+	border-top: 2px solid #202020;
 	display: block;
 	background-color: black;
 }
