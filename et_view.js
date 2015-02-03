@@ -21,6 +21,10 @@ var ETV = {
 			var videoIndex = Math.floor(Math.random() * ETV.VIDEO_ROTATION.length);
 			$('#video-url').val(ETV.VIDEO_ROTATION[videoIndex]);
 		};
+
+		// We have to define the callback above before loading in the api
+		console.log('asdf');
+		$.getScript("https://www.youtube.com/iframe_api", function() {console.log('got')});
 	},
 
 	bindEvents: function() {
