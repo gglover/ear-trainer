@@ -48,7 +48,8 @@ var ETV = {
 				ETV.handlePlayPause();
 			} else if (e.keyCode == 84) { ETV.handleTempoTap();      
 			} else if (e.keyCode == 37) { ETV.handleLeftArrowTap();  
-			} else if (e.keyCode == 39) { ETV.handleRightArrowTap(); }
+			} else if (e.keyCode == 39) { ETV.handleRightArrowTap();
+			} else if (e.keyCode == 13) { ETV.handleSectionReturn(); }
 		}
 		$(document).keydown(redirectKeyInput);
 	},
@@ -146,6 +147,10 @@ var ETV = {
 		} else if (state.data == 1) {
 			TIME_SLIDER.render();
 		}
+	},
+
+	handleSectionReturn: function() {
+		ETM.seek(ETM.sectionStart);
 	},
 
 	handleRightArrowTap: function() {
