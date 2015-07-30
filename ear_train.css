@@ -149,6 +149,36 @@ footer {
 }
 
 
+@media (max-width: 500px) {
+	#content {
+		width: 100%;
+		padding-top: 0px;
+	}
+
+	#unloaded-placeholder {
+		width: 100vw;
+	}
+
+	#unloaded-placeholder ul li:nth-child(n+2):nth-child(-n+4) {
+		display: none;
+	}
+
+	#tempo-controls {
+		display: none;
+	}
+
+	#time-slider {
+		width: 100vw;
+		height: 80px;
+	}
+
+	#video-url {
+		width: 150px;
+	}
+
+}
+
+
 
 
 

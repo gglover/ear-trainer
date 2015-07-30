@@ -10,8 +10,8 @@ var ETV = {
 	initialize: function() {
 		window.onYouTubeIframeAPIReady = function() {
 			ETM.player = new YT.Player('player', {
-				height: '350',
-				width: '800',
+				height: 300,
+				width: Math.min(800, $(window).width()),
 				playerVars: { 'controls': 0 },
 				events: {
 					'onReady': ETV.bindEvents,
@@ -23,7 +23,6 @@ var ETV = {
 		};
 
 		// We have to define the callback above before loading in the api
-		console.log('asdf');
 		$.getScript("https://www.youtube.com/iframe_api", function() {console.log('got')});
 	},
 
